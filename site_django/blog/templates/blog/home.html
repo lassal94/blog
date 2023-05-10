@@ -1,0 +1,63 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}
+    {{title}}
+{% endblock %}
+
+{% block content %}
+    <h1>{{title}}</h1> <!-- для вывода того, что мы передали в render через jinja -->
+   {% for post in news %}
+   <div class="alert alert-light">
+     <h1>{{ post.title }}</h1>
+     <p>{{ post.text|striptags|truncatechars:200 }}</p>
+     <div class="row">
+       <div>
+         <img src="{{ post.author.profile.img.url }}" alt="{{ post.author }}" class="user_images">
+       </div>
+            <div class="mt-2">
+                <span class="text-muted">Публикация: {{ post.date|date:"d E Y в H:i" }}</span>
+                <p><b>Автор:</b> <a href="{% url 'user-news' post.author %}">{{ post.author }}</a></p>
+            </div>
+       </div>
+       <a href="{% url 'news-detail' post.id %}" class="btn btn-outline-warning mt-3">Читать далее</a>
+     </div>
+    {% endfor %} <!-- закрываем цикл -->
+
+    {% if is_paginated %} <!-- проверяем, нужна ли вообще пагинация -->
+        {% if page_obj.has_previous %} <!-- переходы на предыдущую страницу -->
+            <a href="{% url 'home' %}" class="btn btn-outline-warning">Начало</a>
+            <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline-warning">Предыдущая</a>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+            {% if num == page_obj.number %}
+                <button class="btn btn-warning">{{ num }}</button> <!-- для вывода номера страницы -->
+            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %} <!-- будут отображаться 3 ближайших страницы + навигация по страницам -->
+                <a href="?page={{ num }}" class="btn btn-outline-warning">{{ num }}</a>
+            {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %} <!-- переходы на следующую страницу -->
+            <a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline-warning">Следующая</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}" class="btn btn-outline-warning">Последняя</a>
+        {% endif %}
+    {% endif %}
+
+{% endblock %}
+
+{% block aside %}
+<h4 class="mt-2">Интересные статьи</h4>
+<img src="https://itproger.com/img/news/1589893627.jpg" class="img-thumbnail">
+<p>Для многих Python - это язык для написания веб проектов, машинного обучения или для анализа данных. На самом деле он более функционален и в этой статье мы вам это докажем.</p>
+
+<a href="https://itproger.com/news/285" target="_blank">
+  <button class="btn btn-warning">Посмотреть</button>
+</a>
+
+<img src="https://itproger.com/img/news/1591879929.jpg" class="img-thumbnail mt-4">
+<p>Уже не первый год слышно много положительных отзывов про движок Godot. Пришло время узнать больше об этом движке и выяснить почему он столь популярен.</p>
+
+<a href="https://itproger.com/news/285" target="_blank">
+  <button class="btn btn-warning">Посмотреть</button>
+</a>
+{% endblock %}

@@ -1,0 +1,54 @@
+body {
+    background: #fafafa;
+}
+
+footer {
+    width: 70%;
+    margin-left: 15%;
+}
+
+.alert-light {
+    border: solid silver 1px!important;
+    border-radius: 5px!important;
+}
+
+.user_images {  /* для красивого отображения фоток */
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    margin-right: 15px;
+    margin-left: 20px;
+}
+
+.form-register {
+    padding: 20px;
+    background: #fafafa;
+    border: 1px solid silver;
+    margin-top: 20px;
+}
+
+.form-register .helptext {
+    color: #b7b7b7
+}
+
+.form-register ul.errorlist {
+    color: #ca5858;
+    font-weight: bold;
+}
+
+.form-register.auth input, .form-register.auth textarea {
+    display: block;
+    width: 96%;
+    margin-top: 5px;
+    border: 1px solid silver;
+    border-radius: 5px;
+    padding: 2%;
+}
+
+.upd {
+    border: none;
+}
+
+.log {
+    color: rgb(180, 138, 29)
+}
